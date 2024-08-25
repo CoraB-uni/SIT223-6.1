@@ -46,4 +46,53 @@ pipeline{
             }
         }
     }
+    post {
+        always {
+            script {
+                def buildStatus = currentBuild.result ?: 'SUCCESS'
+                def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+                def body = """
+                    <h2>${buildStatus}: ${env.JOB_NAME} [${env.BUILD_NUMBER}]</h2>
+                    <p>Job '${env.JOB_NAME}' (${env.BUILD_URL})</p>
+                    <p>Build Number: ${env.BUILD_NUMBER}</p>
+                    <p>Build Status: ${buildStatus}</p>
+                    <p>Duration: ${currentBuild.durationString}</p>
+                    <p>Build Log: ${env.BUILD_URL}console</p>
+                """
+
+                // Sending the email
+                emailext(
+                    subject: subject,
+                    body: body,
+                    mimeType: 'text/html',
+                    to: 's223352921@deakin.edu.au', // Or use default from plugin settings
+                    from: 'jenkins@example.com'
+                )
+            }
+        }
+
+        failure {
+            script {
+                def buildStatus = 'FAILED'
+                def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+                def body = """
+                    <h2>${buildStatus}: ${env.JOB_NAME} [${env.BUILD_NUMBER}]</h2>
+                    <p>Job '${env.JOB_NAME}' (${env.BUILD_URL})</p>
+                    <p>Build Number: ${env.BUILD_NUMBER}</p>
+                    <p>Build Status: ${buildStatus}</p>
+                    <p>Duration: ${currentBuild.durationString}</p>
+                    <p>Build Log: ${env.BUILD_URL}console</p>
+                """
+
+                // Sending the email
+                emailext(
+                    subject: subject,
+                    body: body,
+                    mimeType: 'text/html',
+                    to: 's223352921@deakin.edu.au', // Or use default from plugin settings
+                    from: 'jenkins@example.com'
+                )
+            }
+        }
+    
 }
