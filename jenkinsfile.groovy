@@ -66,7 +66,6 @@ pipeline{
                     body: body,
                     mimeType: 'text/html',
                     to: 'TB04667@gmail.com', 
-                    from: 'jenkins@example.com'
                 )
             }
         }
@@ -90,7 +89,6 @@ pipeline{
                     body: body,
                     mimeType: 'text/html',
                     to: 'TB04667@gmail.com', // Or use default from plugin settings
-                    from: 'jenkins@example.com'
                 )
             }
         }
