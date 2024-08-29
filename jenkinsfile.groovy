@@ -50,6 +50,7 @@ pipeline{
                         attachLog: true
                     )
                 }
+            }
         }
         stage('Deployment to Staging'){
             steps{
