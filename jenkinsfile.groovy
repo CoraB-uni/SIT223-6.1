@@ -80,8 +80,8 @@ pipeline{
                 to: 'TB04667@gmail.com',
                 subject: "Piepline Failed: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
                 body: "Build failed. Check Jenkins for specific details"
-            )
+                )
+            }   
         }
     }
 }
-        
