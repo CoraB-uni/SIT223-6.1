@@ -19,6 +19,17 @@ pipeline{
                 echo "Running unit and integration tests.."
                 echo "Java code testing executed by JUnit"
             }
+            post {
+                success {
+                    // Send email after the test stage
+                    emailext(
+                        subject: "Testing Scan: ${currentBuild.currentResult}",
+                        body: """<p>Testing scan completed with status: ${currentBuild.currentResult}</p>""",
+                        to: "TB04667@gmail.com",
+                        attachLog: true
+                    )
+                }
+            }
         }
         stage('Code Analysis'){
             steps{
@@ -29,6 +40,16 @@ pipeline{
             steps{
                 echo "Code scanned by ABOM code scanner for vulnerabilities"
             }
+            post {
+                success {
+                    // Send email after the security scan stage
+                    emailext(
+                        subject: "Security Scan: ${currentBuild.currentResult}",
+                        body: """<p>Security Scan completed with status: ${currentBuild.currentResult}</p>""",
+                        to: "TB04667@gmail.com",
+                        attachLog: true
+                    )
+                }
         }
         stage('Deployment to Staging'){
             steps{
